@@ -47,19 +47,19 @@ public class MusicService {
     }
 
     @Transactional
-    public Music update(Long musicId, String name, Long id) {
-        var existing = findById(id);
+    public Music update(Long musicId, String title, Long id) {
+        var existing = findById(musicId);
         var singer = singerService.findById(id);
 
-        boolean sameName = existing.getTitle().equalsIgnoreCase(name);
+        boolean sameTitle = existing.getTitle().equalsIgnoreCase(title);
         boolean sameSinger = existing.getSinger().getId().equals(singer.getId());
 
-        if (!(sameName && sameSinger)
-                && repository.existsByTitleIgnoreCaseAndSinger_Id(name, singer.getId())) {
+        if (!(sameTitle && sameSinger)
+                && repository.existsByTitleIgnoreCaseAndSinger_Id(title, singer.getId())) {
             throw new IllegalArgumentException("Já existe uma música com esse nome para este cantor.");
         }
 
-        existing.setTitle(name);
+        existing.setTitle(title);
         existing.setSinger(singer);
         return repository.save(existing);
     }
