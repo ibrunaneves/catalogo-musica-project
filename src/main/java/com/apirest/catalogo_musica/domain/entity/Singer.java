@@ -1,8 +1,12 @@
 package com.apirest.catalogo_musica.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
+@Data
 @Getter
 @Setter
 @NoArgsConstructor
@@ -28,4 +32,8 @@ public class Singer {
 
     @Column(nullable = false, length = 120)
     private String name;
+
+    @OneToMany(mappedBy = "singer", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Music> musics;
 }

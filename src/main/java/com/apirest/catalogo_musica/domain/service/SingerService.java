@@ -1,5 +1,6 @@
 package com.apirest.catalogo_musica.domain.service;
 
+import com.apirest.catalogo_musica.domain.entity.Music;
 import com.apirest.catalogo_musica.domain.entity.Singer;
 import com.apirest.catalogo_musica.domain.repository.SingerRepository;
 import org.springframework.stereotype.Service;
@@ -46,6 +47,16 @@ public class SingerService {
 
         existing.setName(singer.getName());
         return repository.save(existing);
+    }
+
+    @Transactional
+    public Singer add(Singer singer) {
+        if(singer.getMusics() !=null) {
+            for(Music music : singer.getMusics()) {
+                music.setSinger(singer);
+            }
+        }
+        return repository.save(singer);
     }
 
     @Transactional

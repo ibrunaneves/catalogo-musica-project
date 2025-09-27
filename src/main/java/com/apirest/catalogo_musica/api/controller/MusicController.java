@@ -49,7 +49,6 @@ public class MusicController {
 
     private MusicDTO toDTO(Music m) {
         return new MusicDTO(
-                m.getId(),
                 m.getTitle(),
                 m.getSinger().getId(),
                 m.getSinger().getName()
